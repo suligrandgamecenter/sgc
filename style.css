@@ -1,0 +1,449 @@
+/* SULYGRAND GAME CENTER - STYLESHEET */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #111;
+    color: #eee;
+    padding: 20px;
+    margin: 0;
+    /* Background Image Settings */
+    background-image: url('my-image.png.jpeg'); /* Your background image */
+    background-size:cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keeps image fixed while scrolling */
+    min-height: 100vh;
+    
+}
+
+/* Optional: Dark overlay to make text more readable */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0,7); /* Adjust opacity (0-1) as needed */
+    z-index: -2;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: #c63636;
+    text-shadow: 0 0 10px #000, 0 0 20px #250000;
+    margin-bottom: 10px;
+}
+
+/* Navigation Buttons */
+.switch-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    margin: 0 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.switch-btn.active {
+    opacity: 1;
+}
+
+.switch-btn.inactive {
+    opacity: 0.5;
+}
+
+#pcBtn { background-color: #f44336; }
+#psBtn { background-color: #2196F3; }
+#cafeBtn { background-color: #9c27b0; }
+
+/* Main Controls */
+#mainControls {
+    text-align: center;
+    margin: 20px;
+}
+
+/* Players Grid */
+#players {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+/* Player Card Styles */
+.player {
+    background: linear-gradient(145deg, #0a1f1f 0%, #132d2d 100%);
+    border-radius: 12px;
+    padding: 15px;
+    border: 4px solid #0d9488;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.player:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.player.started {
+    border: 4px solid #34d399;
+    background: linear-gradient(145deg, #041f14 0%, #064e3b 100%);
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+}
+
+.player.paused {
+    border: 4px solid #f87171;
+    background: linear-gradient(145deg, #1f0a0a 0%, #2d0d0d 100%);
+    box-shadow: 0 0 20px rgba(248, 113, 113, 0.3);
+}
+
+/* VIP Player Styles */
+.player.vip {
+    border: 4px solid #fbbf24;
+    background: linear-gradient(145deg, #1a1405 0%, #3d2d05 100%);
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+}
+
+.player.vip.started {
+    border: 4px solid #34d399;
+    background: linear-gradient(145deg, #041f14 0%, #0d3d26 100%);
+    box-shadow: 0 0 25px rgba(52, 211, 153, 0.4);
+}
+
+.player.vip.paused {
+    border: 4px solid #f87171;
+    background: linear-gradient(145deg, #1f0a0a 0%, #2d1a1a 100%);
+    box-shadow: 0 0 25px rgba(248, 113, 113, 0.4);
+}
+
+.player h4 {
+    margin: 0 0 8px 0;
+    font-size: 1.8em;
+    color: #2dd4bf;
+    text-shadow: 0 0 10px rgba(45, 212, 191, 0.5);
+}
+
+.player.started h4 { color: #34d399; }
+.player.paused h4 { color: #f87171; }
+.player.vip h4 { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+
+/* Time and Cost Display */
+.time {
+    font-size: 20px;
+    margin: 8px 0;
+}
+
+.cost {
+    font-size: 20px;
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.game-cost, .food-cost {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #c5c5c5;
+    padding: 0 10px;
+    margin-top: 8px;
+}
+
+.total-cost {
+    margin-top: 8px;
+    font-size: 18px;
+}
+
+/* Food List */
+.food-list {
+    text-align: right;
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: #cfcfcf;
+}
+
+.food-list ul {
+    padding-right: 0;
+    margin: 5px 0;
+    text-align: right;
+    list-style-type: none;
+}
+
+.food-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Food Selection */
+.food-selection {
+    margin-bottom: 10px;
+}
+
+.food-selection select {
+    width: 55%;
+    box-sizing: border-box;
+}
+
+.food-selection button {
+    background: #00bcd4;
+    width: 35%;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+/* Payment Section */
+.payment-section {
+    margin: 10px 0;
+}
+
+.payment-section hr {
+    border: 0;
+    border-top: 1px solid #444;
+    margin: 10px 0;
+}
+
+.payment-section input {
+    width: 100px;
+}
+
+.payment-section button {
+    background: #2196F3;
+}
+
+/* Action Buttons */
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 4px;
+    transition: 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.start-btn, .resume-btn { background-color: #4CAF50; }
+.pause-btn { background-color: #f44336; }
+.reset-btn { background-color: #ff9800; }
+.delete-food-btn { background-color: #e91e63; padding: 3px 8px; font-size: 12px; }
+
+/* Form Elements */
+input, select {
+    border-radius: 8px;
+    border: 2px solid #0d9488;
+    padding: 10px 12px;
+    margin: 5px;
+    background: linear-gradient(145deg, #041414 0%, #0a1f1f 100%);
+    color: #eee;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #2dd4bf;
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.3);
+    outline: none;
+}
+
+input::placeholder {
+    color: #888;
+}
+
+/* Sections */
+.food-manager, .cafe-section, .debt-section, .sales-history-section {
+    background: linear-gradient(145deg, #0a1f1f 0%, #132d2d 100%);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid #0d9488;
+}
+
+.food-manager h3, .cafe-section h3, .debt-section h3, .sales-history-section h3 {
+    margin-top: 0;
+    color: #2dd4bf;
+    text-shadow: 0 0 10px rgba(45, 212, 191, 0.5);
+}
+
+/* List Items */
+#foodMenuList li, #currentOrderList li, #debtList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(145deg, #132d2d 0%, #1a3d3d 100%);
+    margin-bottom: 8px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #0d9488;
+}
+
+.remove-order-item-btn, .delete-sale-btn {
+    background: none;
+    color: #ff5252;
+    font-size: 16px;
+    padding: 0;
+}
+
+/* Cafe Menu */
+.cafe-menu-item-btn {
+    background: linear-gradient(145deg, #0d9488 0%, #0f766e 100%);
+    color: white;
+    margin: 6px;
+    flex-grow: 1;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(13, 148, 136, 0.3);
+}
+
+.cafe-menu-item-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(13, 148, 136, 0.5);
+}
+
+#cafeMenuItems {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Sales History Styles */
+.sale-item {
+    border-right: 5px solid;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    text-align: right;
+    position: relative;
+}
+
+.sale-item.cash {
+    background-color: #0c2b0d;
+    border-color: #4CAF50;
+}
+
+.sale-item.debt {
+    background-color: #301010;
+    border-color: #f44336;
+}
+
+.sale-item-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.sale-item-header .type-cash { color: #4CAF50; }
+.sale-item-header .type-debt { color: #f44336; }
+
+.sale-item-time {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 8px;
+}
+
+.sale-item-products {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+}
+
+.sale-item-products li {
+    border-bottom: 1px solid #444;
+    padding: 3px 0;
+}
+
+.sale-item-products li:last-child {
+    border-bottom: none;
+}
+
+.delete-sale-btn {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+/* Tables */
+table {
+    width: 300px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    color: #151414;
+    background: linear-gradient(145deg, #0a1f1f 0%, #132d2d 100%);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+table, th, td {
+    border: none;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+th {
+    background: linear-gradient(145deg, #132d2d 0%, #1a3d3d 100%);
+    color: #2dd4bf;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background: rgba(13, 148, 136, 0.3);
+}
+
+tr:hover {
+    background: rgba(45, 212, 191, 0.1);
+}
+
+#gameStatsTable {
+    margin-top: 20px;
+}
+
+/* Income Section */
+.income-section {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.income-section > div {
+    text-align: center;
+}
+
+/* Report Section */
+#reportSection {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#reportSection h3 {
+    color: #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #players {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    
+    .main-title {
+        font-size: 32px;
+    }
+}
