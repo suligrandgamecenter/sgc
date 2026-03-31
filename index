@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="ku">
+<head>
+<meta charset="UTF-8">
+<title>Game Center</title>
 
+<style>
+body{background:#111;color:#eee;font-family:sans-serif;text-align:center}
+.player{border:2px solid #0d9488;padding:10px;margin:10px;border-radius:10px}
+button{padding:8px;margin:5px;border:none;border-radius:6px;cursor:pointer}
+.start{background:green}
+.pause{background:red}
+.reset{background:orange}
+</style>
+
+</head>
+<body>
+
+<h1>🎮 Game Center</h1>
+
+<div id="players"></div>
+
+<script>
+const numPC = 10;
+const container = document.getElementById("players");
+
+// ================= LOAD =================
+function load(i){
+    return JSON.parse(localStorage.getItem("pc"+i)) || {
+        time:0,
+        start:0,
+        running:false
+    };
+}
+
+// ================= SAVE =================
+function save(i,data){
+    localStorage.setItem("pc"+i, JSON.stringify(data));
+}
+
+// ================= UI =================
+for(let i=1;i<=numPC;i++){
+    const div = document.createElement("div");
+    div.className="player";
+    div.innerHTML=`
+        <h3>PC ${i}</h3>
+        <div id="time${i}">0</div>
+        <button class="start" onclick="start(${i})">Start</button>
+        <button class="pause" onclick="pause(${i})">Pause</button>
+        <button class="reset" onclick="resetGame(${i})">Reset</button>
+    `;
+    container.appendChild(div);
+    update(i);
+}
+
+// ================= FUNCTIONS =================
+function start(i){
+    let d = load(i);
+    d.running = true;
+    d.start = Date.now();
+    save(i,d);
+}
+
+function pause(i){
+    let d = load(i);
+    if(d.running){
+        d.time += Date.now() - d.start;
+        d.running = false;
+        save(i,d);
+    }
+}
+
+function resetGame(i){
+    save(i,{time:0,start:0,running:false});
+    update(i);
+}
+
+function update(i){
+    setInterval(()=>{
+        let d = load(i);
+        let t = d.time;
+        if(d.running){
+            t += Date.now() - d.start;
+        }
+        document.getElementById("time"+i).innerText = Math.floor(t/1000)+"s";
+    },1000);
+}
+</script>
+
+</body>
+</html>
