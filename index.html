@@ -81,7 +81,7 @@
 
         /* Player Card Styles */
         .player {
-            background: linear-gradient(145deg, #0a1f1f 0%, #132d2d 100%);
+            background: linear-gradient(145deg, #0a1f1f 0%, #132b2d 100%);
             border-radius: 12px;
             padding: 15px;
             border: 4px solid #0d9488;
@@ -175,11 +175,11 @@
             padding-right: 0;
             margin: 5px 0;
             text-align: right;
-            list-style-type: none;
+            list-style-type:none;
         }
 
         .food-list li {
-            display: flex;
+            display:flex;
             justify-content: space-between;
             align-items: center;
         }
@@ -188,6 +188,10 @@
         .food-selection {
             margin-bottom: 10px;
         }
+        .food-selection select:focus {
+    background-color: #000;
+    color: #fff;
+}
 
         .food-selection select {
             width: 55%;
@@ -551,11 +555,11 @@
     <script>
         let mode = 'PC';
         
-        // Configuration: 20 PC (8 VIP), 11 PS (1 VIP)
-        const numPC = 20;
-        const numPCVIP = 8;
-        const numPS = 11;
-        const numPSVIP = 1;
+        // Configuration: 20 Regular PC (1-20), 8 VIP PC (21-28), 10 PS (No VIP)
+        const numPC = 28;  // 20 Regular + 8 VIP = 28 total PCs
+        const numPCVIP = 8; // VIP PCs: 21-28
+        const numPS = 10;   // Total PlayStations: 10
+        const numPSVIP = 0; // No VIP PlayStations
         
         // Price per hour (Regular and VIP)
         const pricePerHour = { 
@@ -566,8 +570,8 @@
         };
         
         // VIP stations
-        const pcVIPStations = [1, 2, 3, 4, 5, 6, 7, 8];  // First 8 PCs are VIP
-        const psVIPStations = [1];  // First PS is VIP
+        const pcVIPStations = [21, 22, 23, 24, 25, 26, 27, 28];  // VIP PCs are numbered 21-28
+        const psVIPStations = [];  // No VIP PlayStations
         
         let intervals = {};
         const playersDiv = document.getElementById('players');
@@ -938,14 +942,21 @@
         function loadPlayer(i) {
             const key = `${mode}${i}`;
             const isVIPPlayer = isVIP(mode, i);
-            const vipLabel = isVIPPlayer ? ' 👑VIP' : '';
+            let displayNum = i;
+            let displayMode = mode;
+            // For VIP PCs (21-28), display as VIP 1-8
+            if (mode === 'PC' && isVIPPlayer) {
+                displayNum = i - 20;
+                displayMode = 'VIP';
+            }
+            const vipLabel = isVIPPlayer ? ' 👑' : '';
             const price = getPrice(mode, i);
             
             const div = document.createElement('div');
             div.className = 'player' + (isVIPPlayer ? ' vip' : '');
             div.id = `playerBox${i}`;
             div.innerHTML = `
-                <h4>${mode} ${i}${vipLabel}</h4>
+                <h4>${displayMode} ${displayNum}${vipLabel}</h4>
                 <div class="time" id="time${i}">00:00</div>
                 <div class="game-cost">
                     <span id="gameCost${i}">🕹️ 0 دینار</span>
