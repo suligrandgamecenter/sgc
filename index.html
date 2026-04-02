@@ -81,10 +81,10 @@
 
         /* Player Card Styles */
         .player {
-            background: linear-gradient(145deg, #0a1f1f 0%, #132b2d 100%);
+            background: rgb(6, 29, 78);
             border-radius: 12px;
             padding: 15px;
-            border: 4px solid #0d9488;
+            border: 4px solid #00a2ff;
             text-align: center;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -96,45 +96,45 @@
         }
 
         .player.started {
-            border: 4px solid #34d399;
-            background: linear-gradient(145deg, #041f14 0%, #064e3b 100%);
-            box-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+            border: 4px solid #1bbe1e;
+            background:#061d07;
+            box-shadow: 0 0 20px #34d3994d;
         }
 
         .player.paused {
-            border: 4px solid #f87171;
-            background: linear-gradient(145deg, #1f0a0a 0%, #2d0d0d 100%);
+            border: 4px solid #9c0e0e;
+            background:#370505;
             box-shadow: 0 0 20px rgba(248, 113, 113, 0.3);
         }
 
         /* VIP Player Styles */
         .player.vip {
             border: 4px solid #fbbf24;
-            background: linear-gradient(145deg, #1a1405 0%, #3d2d05 100%);
+            background: rgb(68, 50, 3);
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
         }
 
         .player.vip.started {
-            border: 4px solid #34d399;
-            background: linear-gradient(145deg, #041f14 0%, #0d3d26 100%);
-            box-shadow: 0 0 25px rgba(52, 211, 153, 0.4);
+              border: 4px solid #1bbe1e;
+            background:#061d07;
+            box-shadow: 0 0 20px #34d3994d;
         }
 
         .player.vip.paused {
-            border: 4px solid #f87171;
-            background: linear-gradient(145deg, #1f0a0a 0%, #2d1a1a 100%);
-            box-shadow: 0 0 25px rgba(248, 113, 113, 0.4);
+          border: 4px solid #9c0e0e;
+            background:#370505;
+            box-shadow: 0 0 20px rgba(248, 113, 113, 0.3);
         }
 
         .player h4 {
             margin: 0 0 8px 0;
             font-size: 1.8em;
-            color: #2dd4bf;
-            text-shadow: 0 0 10px rgba(45, 212, 191, 0.5);
+            color: #00a2ff;
+            
         }
 
-        .player.started h4 { color: #34d399; }
-        .player.paused h4 { color: #f87171; }
+        .player.started h4 { color: #1bbe1e; }
+        .player.paused h4 { color: #9c0e0e; }
         .player.vip h4 { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
 
         /* Time and Cost Display */
@@ -241,10 +241,10 @@
             opacity: 0.9;
         }
 
-        .start-btn, .resume-btn { background-color: #4CAF50; }
-        .pause-btn { background-color: #f44336; }
-        .reset-btn { background-color: #ff9800; }
-        .delete-food-btn { background-color: #e91e63; padding: 3px 8px; font-size: 12px; }
+        .start-btn, .resume-btn { background-color: #4CAF50 !important;}
+        .pause-btn { background-color: #f7473b !important; }
+        .reset-btn { background-color: #ff9a03 !important; }
+        .delete-food-btn { background-color: #e91e63 !important; padding: 3px 8px; font-size: 12px; }
 
         /* Form Elements */
         input, select {
@@ -356,8 +356,8 @@
             margin-bottom: 5px;
         }
 
-        .sale-item-header .type-cash { color: #4CAF50; }
-        .sale-item-header .type-debt { color: #f44336; }
+        .sale-item-header .type-cash { color: #4CAF50 !important; }
+        .sale-item-header .type-debt { color: #f44336 !important; }
 
         .sale-item-time {
             font-size: 12px;
@@ -540,7 +540,7 @@
     </div>
     <table id="gameStatsTable">
         <thead><tr><th style="color:#4CAF50;">Started</th><th style="color:#f44336;">Not Started</th></tr></thead>
-        <tbody><tr><td id="countStarted">0</td><td id="countNotStarted">0</td></tr></tbody>
+        <tbody><tr style="color: #eee;"><td id="countStarted">0</td><td id="countNotStarted">0</td></tr></tbody>
     </table>
     <hr style="border-color: #444; margin: 40px 0;">
     <div class="food-manager">
@@ -619,7 +619,7 @@
             menuList.innerHTML = '';
             menu.forEach((item, index) => {
                 const li = document.createElement('li');
-                li.innerHTML = `<span>${item.name} - ${item.price} دینار</span><button onclick="deleteFoodItem(${index})">سڕینەوە</button>`;
+                li.innerHTML = `<span>${item.name} - ${item.price} دینار</span><button onclick="deleteFoodItem(${index})" style ="background-color:black; color : white ; border :1px solid #444;padding :5px 10px ; border-radius : 5px ; cursor:pointer;">سڕینەوە</button>`;
                 menuList.appendChild(li);
             });
         }
