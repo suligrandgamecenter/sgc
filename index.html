@@ -81,10 +81,10 @@
 
         /* Player Card Styles */
         .player {
-            background: #032648;
+            background: linear-gradient(145deg, #0a1f1f 0%, #132b2d 100%);
             border-radius: 12px;
             padding: 15px;
-            border: 4px solid rgb(10, 93, 165);
+            border: 4px solid #0d9488;
             text-align: center;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -96,45 +96,45 @@
         }
 
         .player.started {
-            border: 4px solid rgb(6, 96, 6);
-            background:#002005;
+            border: 4px solid #34d399;
+            background: linear-gradient(145deg, #087008 0%, #3e6b3e 100%);
             box-shadow: 0 0 20px #34d3994d;
         }
 
         .player.paused {
-            border: 4px solid rgb(99, 8, 8);
-            background:rgb(44, 2, 2);
+            border: 4px solid #f87171;
+            background: linear-gradient(145deg, #1f0a0a 0%, #2d0d0d 100%);
             box-shadow: 0 0 20px rgba(248, 113, 113, 0.3);
         }
 
         /* VIP Player Styles */
         .player.vip {
-            border: 4px solid #9d7716;
-            background: rgb(68, 50, 3);
+            border: 4px solid #fbbf24;
+            background: linear-gradient(145deg, #1a1405 0%, #3d2d05 100%);
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
         }
 
         .player.vip.started {
-              border: 4px solid #1bbe1e;
-            background:#002005;
-            box-shadow: 0 0 20px #34d3994d;
+            border: 4px solid #34d399;
+            background: linear-gradient(145deg, #455e45 0%, #087008 100%);
+            box-shadow: 0 0 25px rgba(52, 211, 153, 0.4);
         }
 
         .player.vip.paused {
-          border: 4px solid #9c0e0e;
-            background:rgb(44, 2, 2);
-            box-shadow: 0 0 20px rgba(248, 113, 113, 0.3);
+            border: 4px solid #f87171;
+            background: linear-gradient(145deg, #1f0a0a 0%, #2d1a1a 100%);
+            box-shadow: 0 0 25px rgba(248, 113, 113, 0.4);
         }
 
         .player h4 {
             margin: 0 0 8px 0;
             font-size: 1.8em;
-            color: #00a2ff;
-            
+            color: #2dd4bf;
+            text-shadow: 0 0 10px rgba(45, 212, 191, 0.5);
         }
 
-        .player.started h4 { color: #1bbe1e; }
-        .player.paused h4 { color: #9c0e0e; }
+        .player.started h4 { color: #34d399; }
+        .player.paused h4 { color: #f87171; }
         .player.vip h4 { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
 
         /* Time and Cost Display */
@@ -471,6 +471,8 @@
         <button onclick="startAll()" style="background:#4CAF50;">▶ Start All</button>
         <button onclick="pauseAll()" style="background:#f44336;">⏸ Pause All</button>
         <button onclick="resetAll()" style="background:#ff9800;">🔄 Reset All</button>
+        <button onclick="resetDay()" style="background:#e91e63;">🔄 Reset Day</button>
+        <button onclick="changeAdminPassword()" style="background:#607d8b;">🔐 Change Password</button>
     </div>
 
     <div id="players"></div>
@@ -935,6 +937,80 @@
                 for (let i = 1; i <= max; i++) {
                     resetTimer(i, true);
                 }
+            }
+        }
+        
+        function resetDay() {
+            if (mode !== 'PC' && mode !== 'PS') return;
+            
+            const adminPassword = localStorage.getItem('adminPassword') || '1234';
+            const enteredPassword = prompt("تکایە وشەی نهێنی بنووسە:");
+            
+            if (enteredPassword !== adminPassword) {
+                alert("وشەی نهێنی هەڵەیە!");
+                return;
+            }
+            
+            if (!confirm("دڵنیایت لە تۆمارکردنی زانیارییەکانی ئەمڕۆ و دەستپێکردنەوەی ڕۆژی نوێ؟\nزانیارییەکان بۆ مێژوو دەتۆمارکرێن.")) return;
+            
+            const today = new Date();
+            const archiveDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+            const archiveKey = `day-archive-${archiveDate}`;
+            
+            const archiveData = {
+                date: archiveDate,
+                players: {},
+                gameIncome: JSON.parse(localStorage.getItem(getTodayKey())) || 0,
+                cafeIncome: JSON.parse(localStorage.getItem(getCafeTodayKey())) || 0
+            };
+            
+            const maxPC = numPC;
+            const maxPS = numPS;
+            
+            for (let i = 1; i <= maxPC; i++) {
+                const data = JSON.parse(localStorage.getItem(`PC${i}`));
+                if (data) archiveData.players[`PC${i}`] = data;
+                if (intervals[`PC${i}`]) clearInterval(intervals[`PC${i}`]);
+                localStorage.removeItem(`PC${i}`);
+            }
+            for (let i = 1; i <= maxPS; i++) {
+                const data = JSON.parse(localStorage.getItem(`PS${i}`));
+                if (data) archiveData.players[`PS${i}`] = data;
+                if (intervals[`PS${i}`]) clearInterval(intervals[`PS${i}`]);
+                localStorage.removeItem(`PS${i}`);
+            }
+            
+            localStorage.removeItem(getTodayKey());
+            localStorage.removeItem(getCafeTodayKey());
+            
+            localStorage.setItem(archiveKey, JSON.stringify(archiveData));
+            
+            intervals = {};
+            updateIncomeDisplay();
+            updateCafeIncomeDisplay();
+            updateTotalIncome();
+            updateCounts();
+            
+            if (mode === 'PC' || mode === 'PS') {
+                renderPlayers();
+            }
+            
+            alert("زانیارییەکانی ئەمڕۆ بۆ مێژوو تۆمارکرا و ڕۆژەکە دەستپێدەکاتەوە.");
+        }
+        
+        function changeAdminPassword() {
+            const currentPassword = prompt("وشەی نهێنیی ئێستا بنووسە:");
+            const storedPassword = localStorage.getItem('adminPassword') || '1234';
+            
+            if (currentPassword !== storedPassword) {
+                alert("وشەی نهێنی هەڵەیە!");
+                return;
+            }
+            
+            const newPassword = prompt("وشەی نهێنیی نوێ بنووسە:");
+            if (newPassword && newPassword.trim() !== "") {
+                localStorage.setItem('adminPassword', newPassword.trim());
+                alert("وشەی نهێنییە نوێیەکە تۆمارکرا!");
             }
         }
         
